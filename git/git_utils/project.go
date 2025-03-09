@@ -1,0 +1,38 @@
+package git_utils
+
+import (
+	"errors"
+	"os"
+	"path/filepath"
+)
+
+func IsGitRepo(dir string) (bool, error) {
+	_, err := os.Stat(filepath.Join(dir, ".git", "HEAD"))
+	if err != nil {
+		if os.IsNotExist(err) {
+			return false, nil
+		}
+
+		return false, err
+	}
+
+	return true, nil
+}
+
+func FindGitRoot(dir string) (string, error) {
+	ok, err := IsGitRepo(dir)
+	if err != nil {
+		return "", err
+	}
+
+	if ok {
+		return dir, nil
+	}
+
+	parent := filepath.Dir(dir)
+	if parent == dir {
+		return "", errors.New("not in a git repo")
+	}
+
+	return FindGitRoot(parent)
+}
