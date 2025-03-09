@@ -43,3 +43,30 @@ func FindGitRoot(dir string) (string, error) {
 
 	return FindGitRoot(parent)
 }
+
+type WorkingRepo struct {
+	Root      string
+	WdRel     string
+	UnixWdRel string
+}
+
+func NewWorkingRepo() (*WorkingRepo, error) {
+	root, err := FindGitRoot(".")
+	if err != nil {
+		return nil, err
+	}
+
+	wd, err := os.Getwd()
+	if err != nil {
+		return nil, err
+	}
+
+	rel, err := filepath.Rel(root, wd)
+	if err != nil {
+		return nil, err
+	}
+
+	unixRel := filepath.ToSlash(rel)
+
+	return &WorkingRepo{Root: root, WdRel: rel, UnixWdRel: unixRel}, nil
+}
