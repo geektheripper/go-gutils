@@ -6,7 +6,7 @@ toolchain go1.23.7
 
 require (
 	github.com/geektheripper/go-gutils/git/git_utils v0.0.2
-	github.com/geektheripper/go-gutils/git/hack_ssh v0.0.1
+	github.com/geektheripper/go-gutils/git/hack_ssh v0.0.2
 	github.com/go-git/go-billy/v5 v5.6.2
 	github.com/go-git/go-git/v5 v5.14.0
 )
