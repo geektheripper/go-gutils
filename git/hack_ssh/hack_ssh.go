@@ -18,6 +18,7 @@ var RegexTriedKey = []*regexp.Regexp{
 
 var RegexKeyAuthenticated = []*regexp.Regexp{
 	regexp.MustCompile(`Authentication succeeded`),
+	regexp.MustCompile(`Authenticated to .+using .+\.`),
 }
 
 type KeyMatch struct {
