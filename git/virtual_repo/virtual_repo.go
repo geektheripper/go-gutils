@@ -1,6 +1,7 @@
 package virtual_repo
 
 import (
+	"errors"
 	"io"
 	"os"
 	"path/filepath"
@@ -78,6 +79,23 @@ func (v *VirtualRepo) UpdateRefs() error {
 
 	v.refs = refs
 	return nil
+}
+
+func (v *VirtualRepo) GetRemoteDefaultBranch() (string, error) {
+	if v.refs == nil {
+		err := v.UpdateRefs()
+		if err != nil {
+			return "", err
+		}
+	}
+
+	for _, ref := range v.refs {
+		if ref.Name().Short() == "HEAD" {
+			return ref.Target().Short(), nil
+		}
+	}
+
+	return "", errors.New("no default branch found")
 }
 
 func (v *VirtualRepo) FilterRefs(prefixes ...string) ([]*plumbing.Reference, error) {

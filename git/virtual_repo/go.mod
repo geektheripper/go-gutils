@@ -9,6 +9,7 @@ require (
 	github.com/geektheripper/go-gutils/git/hack_ssh v0.0.2
 	github.com/go-git/go-billy/v5 v5.6.2
 	github.com/go-git/go-git/v5 v5.14.0
+	github.com/jdx/go-netrc v1.0.0
 )
 
 require (
